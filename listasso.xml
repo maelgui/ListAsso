@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.1" method="upgrade">
+ 
+        <name>ListAsso</name>
+        <creationDate>May 2013</creationDate>
+        <author>Maël Guillossou</author>
+        <authorEmail>mael.guillossou@gmail.com</authorEmail>
+        <authorUrl>http://mael-g.fr.nf</authorUrl>
+        <copyright>Copyright Maël, all right reserved</copyright>
+        <version>0.0.1</version>
+        <description>Un composant joomla pour faire une liste d'associations</description>
+ 
+        <install> <!-- Runs on install -->
+                <sql>
+                        <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+                </sql>
+        </install>
+        <uninstall> <!-- Runs on uninstall -->
+                <sql>
+                        <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+                </sql>
+        </uninstall>
+        <update> <!-- Runs on update; New in 2.5 -->
+                <schemas>
+                        <schemapath type="mysql">sql/updates/mysql</schemapath>
+                </schemas>
+        </update>
+
+        <files folder="site">
+                <filename>index.html</filename>
+                <filename>listasso.php</filename>
+                <filename>controller.php</filename>
+                <folder>views</folder>
+                <folder>models</folder>
+        </files>
+				
+        <fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC">
+					<field name="rules" type="rules" label="JCONFIG_PERMISSIONS_LABEL" class="inputbox" validate="rules" filter="rules" component="com_listasso" section="component" />
+				</fieldset>
+ 
+        <administration>
+                <menu>ListAsso</menu>
+                <files folder="admin">
+                        <filename>index.html</filename>
+                        <filename>listasso.php</filename>
+                        <folder>sql</folder>
+                        <folder>tables</folder>
+                        <folder>models</folder>
+                </files>
+        </administration>
+ </extension>
