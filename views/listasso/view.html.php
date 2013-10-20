@@ -14,7 +14,7 @@ class ListAssoViewListAsso extends JViewLegacy
 		// Assign data to the view
         $this->assos = $this->get('Assos');
 		$this->villes = $this->get('Villes');
-		$this->user = &JFactory::getUser() ;
+		$this->user = JFactory::getUser() ;
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) 

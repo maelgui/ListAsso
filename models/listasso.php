@@ -107,9 +107,9 @@ class ListAssoModelListAsso extends JModelItem
 		return array_values(array_unique($this->sports));
 	}
 		
-	public function updClub($data)
+	public function updAsso($data)
 	{
-		if(filter_var($data->website, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED))
+		if(filter_var($data->website, FILTER_VALIDATE_URL))
 			$url = $data->website;
 		else
 			$url = null;
@@ -135,17 +135,59 @@ class ListAssoModelListAsso extends JModelItem
 		}
 	}
 	
-	public function deleteClub($data)
+	public function delAsso($id)
 	{
-		if(filter_var($data, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE) != null)
-			$id = $data;
-		else
+		if(!filter_var($id, FILTER_VALIDATE_INT))
 			return false;
 			
 		$db = JFactory::getDBO();
 		$query= $db->getQuery(true);
 		$query->clear();
-		$query->remove(' #__listasso ');
+		$query->delete(' #__listasso ');
+		$query->where(' id = ' . (int) $id );
+
+		$db->setQuery((string)$query);
+
+		if (!$db->query()) {
+			JError::raiseError(500, $db->getErrorMsg());
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public function createCity($name)
+	{
+			
+		// set the data into a query to update the record
+		$db = JFactory::getDBO();
+		$query= $db->getQuery(true);
+		$query->clear();
+		$query->insert(' #__ville ');
+		$query->columns('name');
+		$query->values( $db->Quote($name) );
+
+		$db->setQuery((string)$query);
+
+		if (!$db->query()) {
+			JError::raiseError(500, $db->getErrorMsg());
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public function editCity($id, $name)
+	{
+		if(!filter_var($id, FILTER_VALIDATE_INT))
+			return false;
+			
+		// set the data into a query to update the record
+		$db = JFactory::getDBO();
+		$query= $db->getQuery(true);
+		$query->clear();
+		$query->update(' #__ville ');
+		$query->set(' name = '.$db->Quote($name) );
 		$query->where(' id = ' . (int) $id );
 
 		$db->setQuery((string)$query);
